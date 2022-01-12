@@ -51,8 +51,12 @@ public class BrandManager implements BrandService {
     @Override
     public Result update(UpdateBrandRequest updateBrandRequest) {
         Brand brand= modelMapperService.forRequest().map(updateBrandRequest,Brand.class);
-        this.brandDao.save(brand);
-        return new SuccessResult();
+        var response=BusinessRules.run(checkIfBrandIdExists(updateBrandRequest.getId()));
+        if(response==null){
+            this.brandDao.save(brand);
+            return new SuccessResult();
+        }return new ErrorResult();
+
     }
 
     private Result checkIfBrandNameExists(String brandName) {
@@ -66,6 +70,12 @@ public class BrandManager implements BrandService {
         if(this.brandDao.count()>=limit){
             return new ErrorResult(Messages.BRAND_LIMIT_EXCEEDED);
         }return new SuccessResult();
+    }
+    private Result checkIfBrandIdExists(int brandId){
+        var brand= this.brandDao.findById(brandId);
+        if(brand!=null){
+            return new SuccessResult();
+        }return new ErrorResult("Böyle bir kullanıcı yok");
     }
 
 }

@@ -3,6 +3,7 @@ package com.btkakademi.rentacar.business.requests.carRequests;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,9 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCarRequest {
-    @NotNull
     private int id;
-
     private double dailyPrice;
     private int modelYear;
     private String description;

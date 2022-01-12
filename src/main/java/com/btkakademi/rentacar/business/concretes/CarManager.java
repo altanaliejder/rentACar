@@ -7,10 +7,7 @@ import com.btkakademi.rentacar.business.requests.carRequests.CreateCarRequest;
 import com.btkakademi.rentacar.business.requests.carRequests.UpdateCarRequest;
 import com.btkakademi.rentacar.core.utilities.business.BusinessRules;
 import com.btkakademi.rentacar.core.utilities.mapping.ModelMapperService;
-import com.btkakademi.rentacar.core.utilities.results.DataResult;
-import com.btkakademi.rentacar.core.utilities.results.Result;
-import com.btkakademi.rentacar.core.utilities.results.SuccessDataResult;
-import com.btkakademi.rentacar.core.utilities.results.SuccessResult;
+import com.btkakademi.rentacar.core.utilities.results.*;
 import com.btkakademi.rentacar.dataAccess.abstratcs.CarDao;
 import com.btkakademi.rentacar.entities.concretes.Brand;
 import com.btkakademi.rentacar.entities.concretes.Car;
@@ -54,7 +51,18 @@ public class CarManager implements CarService {
     @Override
     public Result update(UpdateCarRequest updateCarRequest) {
         Car car= modelMapperService.forRequest().map(updateCarRequest,Car.class);
-        this.carDao.save(car);
-        return new SuccessResult();
+        var response=BusinessRules.run(checkIfCarIdExists(updateCarRequest.getId()));
+        System.out.println("sadsadsa"+response);
+        if(response==null){
+            this.carDao.save(car);
+            return new SuccessResult();
+        }return new ErrorResult();
+    }
+
+    private Result checkIfCarIdExists(int carId){
+        Car car= this.carDao.getCarById(carId);
+        if(car!=null){
+            return new SuccessResult();
+        }return new ErrorResult("Böyle bir kullanıcı yok");
     }
 }

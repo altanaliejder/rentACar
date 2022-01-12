@@ -47,8 +47,11 @@ public class ColorManager implements ColorService {
     @Override
     public Result update(UpdateColorRequest updateColorRequest) {
         Color color= modelMapperService.forRequest().map(updateColorRequest,Color.class);
-        this.colorDao.save(color);
-        return new SuccessResult();
+        var response=BusinessRules.run(checkIfColorIdExists(updateColorRequest.getId()));
+        if(response==null){
+            this.colorDao.save(color);
+            return new SuccessResult();
+        }return new ErrorResult();
     }
 
 
@@ -57,5 +60,11 @@ public class ColorManager implements ColorService {
         if(brand!=null){
             return new ErrorResult("Tekrarlı kayıt");
         }return new SuccessResult();
+    }
+    private Result checkIfColorIdExists(int colorId){
+        var color= this.colorDao.findById(colorId);
+        if(color!=null){
+            return new SuccessResult();
+        }return new ErrorResult("Böyle bir kullanıcı yok");
     }
 }
