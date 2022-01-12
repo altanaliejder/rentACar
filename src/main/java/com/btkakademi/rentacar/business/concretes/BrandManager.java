@@ -3,6 +3,7 @@ import com.btkakademi.rentacar.business.abstracts.BrandService;
 import com.btkakademi.rentacar.business.constants.Messages;
 import com.btkakademi.rentacar.business.dtos.BrandListDto;
 import com.btkakademi.rentacar.business.requests.brandRequests.CreateBrandRequest;
+import com.btkakademi.rentacar.business.requests.brandRequests.UpdateBrandRequest;
 import com.btkakademi.rentacar.core.utilities.business.BusinessRules;
 import com.btkakademi.rentacar.core.utilities.mapping.ModelMapperService;
 import com.btkakademi.rentacar.core.utilities.results.*;
@@ -45,6 +46,13 @@ public class BrandManager implements BrandService {
         var brand=modelMapperService.forRequest().map(createBrandRequest,Brand.class);
         this.brandDao.save(brand);
         return new SuccessResult(Messages.BRAND_ADDED);
+    }
+
+    @Override
+    public Result update(UpdateBrandRequest updateBrandRequest) {
+        Brand brand= modelMapperService.forRequest().map(updateBrandRequest,Brand.class);
+        this.brandDao.save(brand);
+        return new SuccessResult();
     }
 
     private Result checkIfBrandNameExists(String brandName) {

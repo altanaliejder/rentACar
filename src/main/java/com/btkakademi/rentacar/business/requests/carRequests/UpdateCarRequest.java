@@ -1,13 +1,18 @@
-package com.btkakademi.rentacar.business.dtos;
+package com.btkakademi.rentacar.business.requests.carRequests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarListDto {
+public class UpdateCarRequest {
+    @NotNull
+    private int id;
+
     private double dailyPrice;
     private int modelYear;
     private String description;
