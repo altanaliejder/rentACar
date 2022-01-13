@@ -14,6 +14,7 @@ public class CreateRentalRequest {
     private int rentKilometer;
     private int returnedKilometer;
     private int customerId;
+    private int carId;
 }
 
 //return date rent_dateden önce olamaz

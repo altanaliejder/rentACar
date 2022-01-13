@@ -3,34 +3,25 @@ package com.btkakademi.rentacar.entities.concretes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "rentals")
-public class Rental {
+@Table(name = "maintains")
+public class Maintain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "rent_date")
-    private LocalDate rentDate;
+    @Column(name = "maintain_date")
+    private LocalDate maintainDate;
     @Column(name = "return_date")
     private LocalDate returnDate;
-    @Column(name = "rent_kilometer")
-    private int rentKilometer;
-    @Column(name = "returned_kilometer")
-    private int returnedKilometer;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
 
     @ManyToOne
     @JoinColumn(name = "car_id")

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -34,4 +35,9 @@ public class Car {
     @JoinColumn(name = "color_id")
     private Color color;
 
+    @OneToMany(mappedBy = "car")
+    private List<Maintain> maintains;
+
+    @OneToMany(mappedBy = "car")
+    private List<Rental> rentals;
 }
